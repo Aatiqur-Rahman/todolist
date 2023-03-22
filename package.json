@@ -2,7 +2,8 @@
   "name": "todolist-pracitice",
   "version": "1.0.0",
   "description": "todolist practice",
-  "main": "app.js",
+  "type": "module",
+  "main": "app.mjs",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -22,5 +23,6 @@
   "bugs": {
     "url": "https://github.com/Aatiqur-Rahman/todolist/issues"
   },
-  "homepage": "https://github.com/Aatiqur-Rahman/todolist#readme"
+  "homepage": "https://github.com/Aatiqur-Rahman/todolist#readme",
+  "devDependencies": {}
 }

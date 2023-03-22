@@ -1,22 +1,26 @@
-const express = require('express'); //including express packages 
-const bodyParser  = require('body-parser'); // middleware 
-const ejs = require('ejs'); // importing ejs modules
-const mongoose = require('mongoose'); // importing mongoose packages 
+import express from 'express'; //including express packages 
+import bodyParser from 'body-parser'; // importig body-parser module 
+import ejs from 'ejs'; // importing ejs modules
+import { connect, model } from 'mongoose'; // importing mongoose packages 
+import path from 'path' ; 
 
 
 
 const app = express(); // creating instance of epxress 
 app.set('view engine', 'ejs'); // setting view engine ejs for express application 
-app.use(bodyParser.urlencoded({extended:true})); // parsing url encoded request using qs library 
-app.use(express.static('public')); // middleware of static files 
-
+app.use(bodyParser.urlencoded({extended:true})); // parsing url encoded request using qs library
+//app.use (express.static('public')); // local working directory 
+//console.log(import.meta.url);
+const __dirname = path.resolve(); // getting the current directory 
+console.log(__dirname);
+app.use (express.static(path.join(__dirname , '/public'))); // path.join joins the public directory and current directory 
 
 
 const today = new Date() ;    
 const options = { weekday:'long' , year : 'numeric' , month : 'long' , day : "numeric"} ; 
 const date = today.toLocaleDateString("en-US",options) ; 
 
-mongoose.connect('mongodb://127.0.0.1:27017/todolistdb')
+connect('mongodb://127.0.0.1:27017/todolistdb')
 .then(() => {
     console.log('Connected to MongoDB');
   }); // connecting to database todolistdb
@@ -25,7 +29,7 @@ const itemSchema = { // schema
     name : String 
 }; 
 
-const item   = mongoose.model('Item' , itemSchema) ; // model 
+const item   = model('Item' , itemSchema) ; // model 
 
 // document 
 const item1 = new item({
@@ -49,7 +53,7 @@ const listSchema = {
     name : String , 
     listName : [itemSchema]
 }
-const list = new mongoose.model('list' , listSchema) ;
+const list = new model('list' , listSchema) ;
 
 
 app.get('/:reqParam', function(req,res){
